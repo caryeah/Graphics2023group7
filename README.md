@@ -1,1 +1,1 @@
-# OpenGLProjVS2022
+ready for presentations
