@@ -1,14 +1,10 @@
-#include <GL/glew.h>
+#include<GL/glew.h>
 #include<GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <windows.h>
 #include<math.h>
-
-
-
 
 
 
@@ -59,31 +55,6 @@ static GLubyte quadIndices[6][4] =
     {1, 6, 3, 0}
 };
 
-
-static GLfloat windowVertices[8][3] =
-{
-    // front face of the window frame
-    {48.5, 5.0, 19.0},
-    {49.5, 5.0, 19.0},
-    {48.5, 15.0, 19.0},
-    {49.5, 15.0, 19.0},
-
-    //  back face of the window frame
-    {48.5, 5.0, 20.0},
-    {49.5, 5.0, 20.0},
-    {48.5, 15.0, 20.0},
-    {49.5, 15.0, 20.0}
-};
-
-static GLubyte windowIndices[5][4] =
-{
-    
-    {0, 1, 3, 2}, // Front face
-    {4, 5, 7, 6}, // Back face
-    {0, 1, 5, 4}, // Top face
-    {2, 3, 7, 6}, // Bottom face
-    {0, 2, 6, 4}  // Side face
-};
 
 
 static void getNormal3p
@@ -139,8 +110,6 @@ void cube(GLfloat colr1, GLfloat colr2, GLfloat colr3)
 
 
 }
-
-
 static void resize(int width, int height)
 {
     const float ar = (float)width / (float)height;
@@ -164,7 +133,7 @@ void flooor()
 void table()
 {
     GLfloat table_width = 14;
-    GLfloat table_height = 3.5, table_length = 1.7;
+    GLfloat table_height = 3, table_length = 1.7;
 
     GLfloat leg_width = 0.8, leg_height = 0.3, leg_length = 7;
 
@@ -265,7 +234,6 @@ void chair()
 }
 
 
-
 void full_set()
 {
     glPushMatrix();
@@ -279,7 +247,7 @@ void full_set()
 
 }
 
-void set_chair_table()
+void nine_full_set_chair_table()
 {
     glPushMatrix();
 
@@ -290,6 +258,8 @@ void set_chair_table()
     glTranslatef(15, 0, 0);
     full_set();
     glPopMatrix();
+
+
 
     glPushMatrix();
     glTranslatef(0, 0, 20);
@@ -430,7 +400,6 @@ void fan()
 }
 
 
-
 void door()
 {
 
@@ -453,67 +422,6 @@ void door()
     glPopMatrix();
 
 }
-
-void RBcube() {
-    glutSolidCube(1.0);
-}
-void Robot() {
-    glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-
-    // Draw the head
-    glTranslatef(0.0, 2.0, 0.0);
-    RBcube();
-
-    // Draw the body
-    glTranslatef(0.0, -2.5, 0.0);
-    glScalef(1.0, 2.0, 0.5);
-    RBcube();
-
-    // Draw the arms
-    glLoadIdentity();
-    glTranslatef(-1.5, 0.0, 0.0);
-    glScalef(3.0, 0.25, 0.25);
-    RBcube();
-    glLoadIdentity();
-    glTranslatef(1.5, 0.0, 0.0);
-    glScalef(3.0, 0.25, 0.25);
-    RBcube();
-
-    // Draw the legs
-    glLoadIdentity();
-    glTranslatef(-0.75, -4.0, 0.0);
-    glScalef(0.5, 2.0, 0.5);
-    RBcube();
-    glLoadIdentity();
-    glTranslatef(0.75, -4.0, 0.0);
-    glScalef(0.5, 2.0, 0.5);
-    RBcube();
-
-    glutSwapBuffers();
-}
-
-void reshape(int w, int h) {
-    glViewport(0, 0, w, h);
-}
-void window()
-{
-    
-    glPushMatrix();
-    glTranslatef(40, 15, -5);  //  window position
-    glScalef(1.0, 0.5, 0.1);  //  window size
-    for (int i = 0; i < 5; i++)
-    {
-        glBegin(GL_QUADS);
-        for (int j = 0; j < 4; j++)
-        {
-            glVertex3fv(&windowVertices[windowIndices[i][j]][0]);
-        }
-        glEnd();
-    }
-    glPopMatrix();
-}
-
 void room()
 {
     glPushMatrix();//front wall
@@ -528,15 +436,16 @@ void room()
     cube(1.255, 0.000, 0.000); //light
     glPopMatrix();
 
-    glPushMatrix();  //blackboard
+    glPushMatrix();  //board
     glTranslatef(0, 1, 18);
     glScalef(30, 0.5, 8);
     glTranslatef(-1, -1, -1);
     cube(1.0, 1.0, 1.0);
     glPopMatrix();
 
-    
-   
+    glPushMatrix();//clock
+    glPushMatrix();
+    glTranslatef(3, 1, 31);
     glPopMatrix();
     glPopMatrix();
     wall(1.000, 1.000, 0.878);
@@ -561,14 +470,6 @@ void room()
     cube(1.225, 0.000, 0.000); //light
     glPopMatrix();
 
-    glPushMatrix(); //window 
-    glTranslatef(42, 30, -5);
-    glRotatef(90, 0, 1, 0);
-    glScalef(12, 1, 0.8);
-    glTranslatef(-1, -1, -1);
-    window();
-    glPopMatrix();
-
     glPushMatrix();
     door();
     glPopMatrix();
@@ -580,7 +481,6 @@ void room()
 
 
     glPushMatrix(); //right side wall start
-
     glPushMatrix();//light right side
 
     glTranslatef(-42, 30, -5);
@@ -588,11 +488,12 @@ void room()
     glScalef(12, 1, 0.8);
     glTranslatef(-1, -1, -1);
     cube(1.225, 0.000, 0.000); //light
+
     glPopMatrix();
+
     glTranslatef(-50.0, 0, -1);
     glRotatef(90, 0, 0, 1);
     wall(1.000, 0.894, 0.882);
-
     glPopMatrix();//right side  wall
 
 
@@ -622,14 +523,6 @@ void room()
 
 }
 
-void init() {
-    glClearColor(1.0, 1.0, 1.0, 0.0);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-5.0, 5.0, -5.0, 5.0, -5.0, 5.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-}
 
 void classRoom()
 {
@@ -637,36 +530,27 @@ void classRoom()
     room();
     glPopMatrix();
 
-    glPushMatrix();   //teachers desk
-    glScalef(1.5, 1, 1);
-   // init();
-   // glutDisplayFunc(Robot);
-   // glutReshapeFunc(reshape);
-    glRotatef(180, 0, 1, 0);
-    glTranslatef(15, 4, -30);
-    //glutDisplayFunc(Robot);
-    glutReshapeFunc(reshape);
-    //full_set();
-    glPopMatrix();
-
     glPushMatrix();
     glTranslatef(5, 0, -5);
     glScalef(1.2, 1, 1.2);
-    set_chair_table();
+    nine_full_set_chair_table();
     glPopMatrix();
 
     glPushMatrix();
     glScalef(1.2, 1.4, 1);
     glTranslatef(-35, 0, 10);
     glRotatef(90, 0, 1, 0);
-   
     glPopMatrix();
 
 }
 
 
+/*
 
+ glPushMatrix();
+    glPopMatrix();
 
+*/
 
 void light()
 {
@@ -823,16 +707,17 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, 0, 1, 0); //eyeX,eyeY,eyeZ //5,10,-20
-    glViewport(0, 0, width, height);
+    //glViewport(0, 0, width, height);
 
 
 
 
-   
+    /*
+
+    */
     glRotatef(theta, axis_x, axis_y, 0);
 
     light();
-    
     classRoom();
 
     glFlush();
@@ -950,8 +835,6 @@ void animate()
 
 
 
-
-
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
@@ -964,7 +847,6 @@ int main(int argc, char** argv)
     glutReshapeFunc(resize);
 
     glShadeModel(GL_SMOOTH);
-   
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
 
